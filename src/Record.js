@@ -34,7 +34,6 @@ const Demo=(props)=>{
                         // window.URL.createObjectURL(e);
                         // console.log('url is: ',window.URL.createObjectURL(e))
 
-                        const file=new Audio(window.URL.createObjectURL(e))
                         console.log('base64 encoded: ',window.btoa(window.URL.createObjectURL(e)))
 
                         {props.onCallFiles(window.URL.createObjectURL(e))}
@@ -51,14 +50,7 @@ const Demo=(props)=>{
 
                 
                     
-                        {/* <button className="iconfont icon-stop w-30 center" title="停止"
-                           onClick={() => controlAudio("inactive")}>stop</button>
-                        {status !== "recording" &&
-                        <button className="iconfont icon-start w-30 center " title="开始"
-                           onClick={() => controlAudio("recording")}>start</button>}
-                        {status === "recording" &&
-                        <button className="iconfont icon-pause" title="暂停"
-                           onClick={() => controlAudio("paused")}>pause</button>} */}
+                        
                         
                     
                 {/* </AudioAnalyser> */}
@@ -72,78 +64,5 @@ const Demo=(props)=>{
             </div>
     )
 }
-// class Demo extends Component {
-//     constructor(props) {
-//         super(props)
-//         this.state = {
-//             status: ""
-//         }
-//     }
- 
-//     componentDidMount() {
-//     }
- 
-//     controlAudio(status) {
-//         this.setState({
-//             status
-//         })
-//     }
- 
-//     changeScheme(e) {
-//         this.setState({
-//             audioType: e.target.value
-//         })
-//     }
- 
-//     render() {
-//         const {status, audioSrc, audioType} = this.state;
-//         const audioProps = {
-//             audioType,
-//             // audioOptions: {sampleRate: 30000}, // 设置输出音频采样率
-//             status,
-//             audioSrc,
-//             timeslice: 1000, // timeslice（https://developer.mozilla.org/en-US/docs/Web/API/MediaRecorder/start#Parameters）
-//             startCallback: (e) => {
-//                 console.log("succ start", e)
-//             },
-//             pauseCallback: (e) => {
-//                 console.log("succ pause", e)
-//             },
-//             stopCallback: (e) => {
-//                 this.setState({
-//                     audioSrc: window.URL.createObjectURL(e)
-//                 })
-//                 console.log("succ stop", e)
-//             },
-//             onRecordCallback: (e) => {
-//                 console.log("recording", e)
-//             },
-//             errorCallback: (err) => {
-//                 console.log("error", err)
-//             }
-//         }
-//         return (
-//             <div>
-//                 <AudioAnalyser {...audioProps}>
-//                     <div className="btn-box">
-//                         {status !== "recording" &&
-//                         <button className="iconfont icon-start" title="开始"
-//                            onClick={() => this.controlAudio("recording")}></button>}
-//                         {status === "recording" &&
-//                         <button className="iconfont icon-pause" title="暂停"
-//                            onClick={() => this.controlAudio("paused")}></button>}
-//                         <button className="iconfont icon-stop" title="停止"
-//                            onClick={() => this.controlAudio("inactive")}></button>
-//                     </div>
-//                 </AudioAnalyser>
-//                 <p>choose output type</p>
-//                 <select name="" id="" onChange={(e) => this.changeScheme(e)} value={audioType}>
-//                     <option value="audio/webm">audio/webm（default）</option>
-//                     <option value="audio/wav">audio/wav</option>
-//                     <option value="audio/mp3">audio/mp3</option>
-//                 </select>
-//             </div>
-//         );
-//     }
-// }
+
 export default Demo;

@@ -43,25 +43,16 @@ const callFiles=(f)=>{
     setFiles(list)
 
 }
-// function Outfiles(p){
-//     // console.log(files)
-//     const op=files.map((f)=>
-//         f
-//     )
-//     // alert('inside outfiles')
-//     return (
-//         op
-//     )
-// }
 
-const triggerDelete=(f,ind,fstr)=>{
+
+const triggerDelete=(f,index)=>{
     // alert('removing')
     // console.log(document.getElementById("app"))
     // document.getElementById(`file${index}`).style.display="none";
     // delete files[index]
     
     // setFiles(delete files[index])
-    console.log('attempting to delete: ',ind)
+    // console.log('attempting to delete: ',ind)
     if(window.confirm("Are you sure that you want to delete?")){
         // var newList=[]
         // newList=files.forEach((fi,i)=>{
@@ -72,7 +63,7 @@ const triggerDelete=(f,ind,fstr)=>{
         var it
         var newList=[]
         for(it=0;it<files.length;it++){
-                if(fstr!==files[it].toString()){
+                if(files[it]!==f){
                     newList.push(files[it]);
                 }
         }
@@ -90,7 +81,7 @@ const triggerDelete=(f,ind,fstr)=>{
           <button className="w-2 center f6 link grow  white bg-black" style={{height:'2rem',width:'2rem',borderRadius:'60%'}} onClick={()=>{
             //   alert('removing');
             //   delete files[index]
-              triggerDelete(f,index,f.toString())
+              triggerDelete(f,index)
           }}><AiFillCloseCircle/></button>
           <audio controls autoplay name="media"><source src={f} type="audio/wav"></source></audio>
           </div>
@@ -99,6 +90,8 @@ const triggerDelete=(f,ind,fstr)=>{
       
       
       <Demo status={st}  onCallFiles={callFiles}/>
+
+
       
       <div className="row" style={{display:'flex',justifyContent:'space-between'}}>
         
