@@ -10,11 +10,11 @@ const Demo=(props)=>{
     //     setStatus(status)
     //     // console.log(status)
     // }
-    const changeScheme=(e)=>{
-        setAudioType(e.target.value);
-    }
+    // const changeScheme=(e)=>{
+    //     setAudioType(e.target.value);
+    // }
     return(
-        <div class="record">
+        <div className="record">
                 <AudioAnalyser
                     status={props.status}
                     audioType = {audioType}
@@ -34,7 +34,7 @@ const Demo=(props)=>{
                         // window.URL.createObjectURL(e);
                         // console.log('url is: ',window.URL.createObjectURL(e))
 
-                        console.log('base64 encoded: ',window.btoa(window.URL.createObjectURL(e)))
+                        // console.log('base64 encoded: ',window.btoa(window.URL.createObjectURL(e)))
 
                         {props.onCallFiles(window.URL.createObjectURL(e))}
                         
