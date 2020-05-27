@@ -34,9 +34,12 @@
   flex-direction: column ;
   
 }
-.start-button{
-  
+.record{
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column ;
 }
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
