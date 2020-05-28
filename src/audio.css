@@ -1,0 +1,42 @@
+.mic{
+  
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column ;
+  
+}
+.record{
+  display: flex;
+  justify-content: flex-end;
+  flex-direction: column ;
+}
+
+.iconfont {
+  font-size: 30px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-box {
+  width: 500px;
+  text-align: center;
+  padding: 2px;
+}
+
+.submitButton {
+  height: 2.429em;
+  width: 9.714em;
+  border: 1px solid #214796;
+  background-color: #214796;
+  border-radius: 0.25em;
+  color: #ffffff;
+  font-size: 0.5em;
+  font-family: jioType-Medium;
+  boxShadow: 0em 0.125em 0.25em #0000001A;
+}
+/* .recorder {
+  margin-left: auto;
+  margin-right: auto;
+  width: 20em;
+  background-color: black;
+} */
