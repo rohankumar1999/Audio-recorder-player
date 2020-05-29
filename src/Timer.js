@@ -8,7 +8,7 @@ import Demo from './Record';
 
 const Timer = props => {
   const maxRecordings = props && props.question && props.question.response_length ? props.question.response_length : 3;
-  const [seconds, setSeconds] = useState(3);
+  const [seconds, setSeconds] = useState(5);
   const [st, setSt] = useState('');
   const [files, setFiles] = useState([]);
   const toggle = st => {
@@ -16,7 +16,7 @@ const Timer = props => {
   };
 
   const reset = () => {
-    setSeconds(3);
+    setSeconds(5);
     // setSt("incactive");
   };
 
@@ -24,15 +24,15 @@ const Timer = props => {
     let interval = null;
     if (seconds === 0) {
       setSeconds(0)
-      
+
       toggle('inactive');
       reset();
     }
     if (st === 'recording') {
       interval = setInterval(() => {
         setSeconds(seconds => seconds - 1);
-      }, 1030);
-    } else if (st === 'paused' && seconds !== 3) {
+      }, 1050);
+    } else if (st === 'paused' && seconds !== 5) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
@@ -162,9 +162,9 @@ const Timer = props => {
 
       </div>
 
-      <div className="files pa3 center" style={{ display: 'flex', justifyContent: 'center' }}>
+      <div className="files pa3 row center" style={{ display: 'flex', justifyContent: 'center' }}>
         <div style={{
-          display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'column'
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column'
         }}>
           {files.map((f, index) => (
             <div
@@ -173,8 +173,8 @@ const Timer = props => {
               }}
               className={`file${index}`}
               key={f.toString()}>
-              <audio controls autoPlay name="media"><source src={f} className="bg-red" type="audio/wav" /></audio>
-              <div style={{ width: '2em' }} />
+              <audio controls autoPlay style={{width:'250px'}} name="media"><source src={f} className="bg-red" type="audio/wav" /></audio>
+              <div style={{}} />
               <button
                 className="w-2 center f6 link grow "
                 style={{ height: '2rem', width: '2rem', borderRadius: '60%' ,background: '#B6B6B4' }}
@@ -193,7 +193,7 @@ const Timer = props => {
         </div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        {files.length > 0 ? <button className="submitButton" style={{ fontSize: '1.3em',background: '#B6B6B4',color:'black' ,fontFamily:'bold'}} onClick={submitAudio} type="button" >Submit</button> : null}
+        {files.length > 0 ? <button className="submitButton" style={{ fontSize: '1em',background: '#B6B6B4',color:'black' ,fontFamily:'bold'}} onClick={submitAudio} type="button" >Submit</button> : null}
       </div>
 
     </div>
