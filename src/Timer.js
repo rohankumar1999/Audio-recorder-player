@@ -74,28 +74,28 @@ const Timer = props => {
   };
 
   const submitAudio = () => {
-    // files.forEach(f => {
-    //   fetch(f)
-    //     .then((res) => {
-    //       res.blob().then(function (blob) {
-    //         var reader = new FileReader();
-    //         reader.addEventListener("loadend", function () {
-    //           var base64FileData = reader.result.toString();
-    //           var mediaFileObject = {
-    //             fileUrl: f,
-    //             size: blob.size,
-    //             type: blob.type,
-    //             src: base64FileData.slice(22)
-    //           };
-    //           console.log('audio file: ', mediaFileObject.src) //mediaFileObject.src is the actual encoded audio file
-    //         });
+    files.forEach(f => {
+      fetch(f)
+        .then((res) => {
+          res.blob().then(function (blob) {
+            var reader = new FileReader();
+            reader.addEventListener("loadend", function () {
+              var base64FileData = reader.result.toString();
+              var mediaFileObject = {
+                fileUrl: f,
+                size: blob.size,
+                type: blob.type,
+                src: base64FileData.slice(22)
+              };
+              console.log('audio file: ', mediaFileObject.src) //mediaFileObject.src is the actual encoded audio file
+            });
 
-    //         reader.readAsDataURL(blob);
+            reader.readAsDataURL(blob);
 
-    //       });
-    //     });
-    // });
-    // window.alert('Your Audio/s have been submitted!!');
+          });
+        });
+    });
+    window.alert('Your Audio/s have been submitted!!');
   };
   // const submitAudio = () => {
   //   console.log('submitAudio');
