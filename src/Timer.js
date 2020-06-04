@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { AiFillPlaySquare, AiFillPauseCircle, AiFillCloseCircle } from 'react-icons/ai';
 import { FaStopCircle, FaMicrophoneAlt } from 'react-icons/fa';
+import {MdRecordVoiceOver} from "react-icons/md";
 import './audio.css';
 // import AudioAnalyser from "react-audio-analyser";
 import 'tachyons';
@@ -107,6 +108,9 @@ const Timer = props => {
   // };
   return (
     <div style={{ width: '100%', height: '100%' }}>
+      <div className="ph3 pv2 mb2 dib w-50 center black " style={{ fontSize: '1.5em', display: 'flex', justifyContent: 'center' }}>
+      {files.length}/{maxRecordings} Cough Recordings
+      </div>
       <div className="ph3 pv2 mb2 dib w-50 center black " style={{ fontSize: '2em', display: 'flex', justifyContent: 'center' }}>
         {seconds}
         s
@@ -134,7 +138,7 @@ const Timer = props => {
                 }
                 toggle('recording');
               }}>
-              <AiFillPlaySquare size="30" color="black" />
+              <MdRecordVoiceOver size="30" color="black" />
             </button>
           )}
         {st === 'recording'
@@ -193,7 +197,7 @@ const Timer = props => {
         </div>
       </div>
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        {files.length > 0 ? <button className="submitButton" style={{ fontSize: '1em',background: '#B6B6B4',color:'black' ,fontFamily:'bold'}} onClick={submitAudio} type="button" >Submit</button> : null}
+        {files.length > 0 ? <button className="submitButton" style={{ fontSize: '1em',background: '#B6B6B4',color:'black' ,fontFamily:'bold'}} onClick={submitAudio} type="button" >Upload</button> : null}
       </div>
 
     </div>

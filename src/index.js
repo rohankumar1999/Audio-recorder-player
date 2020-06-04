@@ -8,7 +8,7 @@ import Timer from './Timer'
 
 ReactDOM.render(
   <React.StrictMode>
-    <Timer/>
+     <Timer />       {/* props: question={{response_length :5}} */}
   </React.StrictMode>,
   document.getElementById('root')
 );
