@@ -1,11 +1,8 @@
 import React, { useState } from 'react';
-import './audio.css';
 import AudioAnalyser from 'react-audio-analyser';
-import 'tachyons';
-
-const Demo = props => {
+const AudioRecorder = props => {
     const [audioType, setAudioType] = useState('audio/wav');
-    const [audioSrc, setAudioSrc] = useState('');
+    // const [audioSrc, setAudioSrc] = useState('');
     return (
         <div className="record">
             <AudioAnalyser
@@ -13,11 +10,11 @@ const Demo = props => {
                 size={'10%'}
                 // width={'100%'}
                 width={200}
-                strokeColor={'#000000'}
+                strokeColor={'#039073'}
                 status={props.status}
                 audioType={audioType}
                 timeslice={1000}
-                audioSrc={audioSrc}
+                // audioSrc={audioSrc}
                 className="center"
                 startCallback={e => {
                     console.log('succ start', e);
@@ -27,13 +24,9 @@ const Demo = props => {
                     console.log('succ pause', e);
                 }}
                 stopCallback={e => {
-                    // console.log("succ stop", e)
-                    // window.URL.createObjectURL(e);
-                    // console.log('url is: ',window.URL.createObjectURL(e))
+                   
 
-                    // console.log('base64 encoded: ',window.btoa(window.URL.createObjectURL(e)))
-
-                    { props.onCallFiles(window.URL.createObjectURL(e)); }
+                    { props.onAddRecordings(window.URL.createObjectURL(e)); }
                 }}
                 onRecordCallback={e => {
                     console.log('recording', e);
@@ -46,4 +39,4 @@ const Demo = props => {
     );
 };
 
-export default Demo;
+export default AudioRecorder;

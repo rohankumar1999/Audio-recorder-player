@@ -24,15 +24,20 @@
 }
 
 .submitButton {
-  height: 2.429em;
-  width: 9.714em;
-  border: 1px solid #214796;
-  background-color: #214796;
-  border-radius: 0.25em;
-  color: #ffffff;
-  font-size: 0.5em;
-  font-family: jioType-Medium;
-  boxShadow: 0em 0.125em 0.25em #0000001A;
+  background: #039073;
+  border: 4px solid #00745D;
+  border-radius: 4px;
+  outline: none;
+  padding: 0.5em 0.8em;
+  margin-right: 15px;
+  color: white;
+  font-size: 1em;
+  font-family: sans-serif;
+  font-weight: bold;
+  cursor: pointer;
+}
+.submitButton:active{
+  background: #00745D;
 }
 /* .recorder {
   margin-left: auto;

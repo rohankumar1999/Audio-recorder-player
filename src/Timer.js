@@ -1,81 +1,75 @@
 import React, { useState, useEffect } from 'react';
-import { AiFillPlaySquare, AiFillPauseCircle, AiFillCloseCircle } from 'react-icons/ai';
-import { FaStopCircle, FaMicrophoneAlt } from 'react-icons/fa';
-import {MdRecordVoiceOver} from "react-icons/md";
 import './audio.css';
-// import AudioAnalyser from "react-audio-analyser";
-import 'tachyons';
-import Demo from './Record';
+import {RecordVoiceOver,Stop,DeleteForever,MicNone} from '@material-ui/icons';
+import AudioRecorder from './Record';
+function renderingRecordingStatus(recordings, maxRecordings) {
+  return <div
+    // className="pv2 center black " 
+    style={{ paddingTop: '0.5em', fontSize: '2em', display: 'flex', justifyContent: 'center', fontWeight: '500', color: '#039073' }}>
 
+    {recordings.length}/{maxRecordings} Cough Recordings
+
+  </div>;
+}
 const Timer = props => {
   const maxRecordings = props && props.question && props.question.response_length ? props.question.response_length : 3;
-  const [seconds, setSeconds] = useState(5);
-  const [st, setSt] = useState('');
-  const [files, setFiles] = useState([]);
-  const toggle = st => {
-    setSt(st);
+  const [timerValue, setTimerValue] = useState(5);
+  const [recordStatus, setRecordStatus] = useState('');
+  const [recordings, setRecordings] = useState([]);
+
+  const toggle = status => {
+    setRecordStatus(status);
   };
 
   const reset = () => {
-    setSeconds(5);
-    // setSt("incactive");
+    setTimerValue(5);
+    
   };
 
   useEffect(() => {
     let interval = null;
-    if (seconds === 0) {
-      setSeconds(0)
+    if (timerValue === 0) {
+      setTimerValue(0)
 
       toggle('inactive');
       reset();
     }
-    if (st === 'recording') {
+    if (recordStatus === 'recording') {
       interval = setInterval(() => {
-        setSeconds(seconds => seconds - 1);
+        setTimerValue(timerValue => timerValue - 1);
       }, 1050);
-    } else if (st === 'paused' && seconds !== 5) {
+    } else if (recordStatus === 'paused' && timerValue !== 5) {
       clearInterval(interval);
     }
     return () => clearInterval(interval);
-  }, [st, seconds]);
+  }, [recordStatus, timerValue]);
 
-  const callFiles = f => {
-    const list = [];
-    files.forEach(fi => {
-      list.push(fi);
+  const addRecordings = f => {
+    const recordings_list = [];
+    recordings.forEach(fi => {
+      recordings_list.push(fi);
     });
-    list.push(f);
-    setFiles(list);
+    recordings_list.push(f);
+    setRecordings(recordings_list);
   };
 
   const triggerDelete = (f, index) => {
-    // alert('removing')
-    // console.log(document.getElementById("app"))
-    // document.getElementById(`file${index}`).style.display="none";
-    // delete files[index]
-
-    // setFiles(delete files[index])
-    // console.log('attempting to delete: ',ind)
+    
     if (window.confirm('Are you sure that you want to delete?')) {
-      // var newList=[]
-      // newList=files.forEach((fi,i)=>{
-      //     if(i!==ind){
-      //         return fi;
-      //     }
-      // })
+      
       let it;
-      const newList = [];
-      for (it = 0; it < files.length; it++) {
-        if (files[it] !== f) {
-          newList.push(files[it]);
+      const newRecordings = [];
+      for (it = 0; it < recordings.length; it++) {
+        if (recordings[it] !== f) {
+          newRecordings.push(recordings[it]);
         }
       }
-      setFiles([...newList]);
+      setRecordings([...newRecordings]);
     }
   };
 
   const submitAudio = () => {
-    files.forEach(f => {
+    recordings.forEach(f => {
       fetch(f)
         .then((res) => {
           res.blob().then(function (blob) {
@@ -107,97 +101,125 @@ const Timer = props => {
   //   // window.alert("Your Audio/s have been submitted!!")
   // };
   return (
-    <div style={{ width: '100%', height: '100%' }}>
-      <div className="ph3 pv2 mb2 dib w-50 center black " style={{ fontSize: '1.5em', display: 'flex', justifyContent: 'center' }}>
-      {files.length}/{maxRecordings} Cough Recordings
+    <div >
+      {renderingRecordingStatus(recordings, maxRecordings)}
+
+
+      <div 
+      // className="pv2 center black " 
+      style={{ paddingTop:'0.5em',paddingBottom:'0.5em', fontSize: '3em', display: 'flex', justifyContent: 'center',color:'#ff073a' }}>
+
+        {timerValue}s
+
       </div>
-      <div className="ph3 pv2 mb2 dib w-50 center black " style={{ fontSize: '2em', display: 'flex', justifyContent: 'center' }}>
-        {seconds}
-        s
-                  </div>
 
-      <div className="ph3 pv2 mb2 dib w-50 center black" style={{ fontSize: '1em', display: 'flex', justifyContent: 'center' }}>
-        <FaMicrophoneAlt size="80" />
+      <div
+      //  className="pv2 center black" 
+      style={{ fontSize: '1em', display: 'flex', justifyContent: 'center' ,color:'#039073'}}>
+
+      <  RecordVoiceOver style={{fontSize:'80px'}} />
+
       </div>
       
-           <Demo status={st} onCallFiles={callFiles} width="400%"/>
+      <div style={{ display: 'flex', justifyContent: 'center' }}>
+      <AudioRecorder status={recordStatus} onAddRecordings={addRecordings} width="400%"/>
+      </div>
+      
       
       
 
-      <div className="row" style={{ display: 'flex', justifyContent: 'space-between' }}>
+      <div style={{paddingTop:'1em', paddingBottom:'1em', display: 'flex', justifyContent: 'center',alignItems: 'center' }}>
 
-        {st !== 'recording'
+        {recordStatus !== 'recording'
           && (
+            <div style={{display:'flex',alignItems:'center',flexDirection:'column'}}>
+
             <button id="start"
-              style={{ background: "#B6B6B4", width: "5em", boxShadow: '0em 0.125em 0.25em #0000001A' }}
-              className={` f6 link center br3 ph3 pv2 mb2 dib light-blue bg-black button-primary-${st === 'recording' ? 'active' : 'inactive'}`}
+              style={{height:'5em', width:'5em' ,color:'white' ,borderRadius:50 , background: "white",borderColor:'#039073',borderWidth:'0px', boxShadow : '0em 0em 1em #888888' }}
+              // className={` f6 center br3 ph3 pv2 mb2 `}
               onClick={() => {
-                if (files && files.length >= maxRecordings) {
+                if (recordings && recordings.length >= maxRecordings) {
                   alert(`You can not add more than ${maxRecordings} recordings.`);
                   return;
                 }
                 toggle('recording');
               }}>
-              <MdRecordVoiceOver size="30" color="black" />
+              <MicNone fontSize="large"  style={{color:"#039073",fontSize:'3.5em'}} />
             </button>
+            
+          <p style={{color:'#039073',fontWeight:'bold',fontFamily:'Verdana'}}>
+            Tap to start
+          </p>
+            </div>
           )}
-        {st === 'recording'
+        {/* {st === 'recording'
           && (
             <button id="pause"
-              style={{ background: "#B6B6B4", width: "5em", boxShadow: '0em 0.125em 0.25em #0000001A' }}
-              className={` f6 link center br3 ph3 pv2 mb2 dib light-blue bg-black button-primary-${st === 'recording' ? 'active' : 'inactive'}`} onClick={() => { toggle('paused'); }}>
-              <AiFillPauseCircle size="30" color="black" />
+              style={{borderRadius:'10px', background: "#B6B6B4", width: "5em", boxShadow: '0em 0.125em 0.25em #0000001A' }}
+              // className={` f6 center br3 ph3 pv2 mb2 grow`} 
+              onClick={() => { toggle('paused'); }}>
+              <PauseCircleFilledIcon fontSize="large" color="black" />
             </button>
-          )}
-        {(st==='paused'||st==='recording')
+          )} */}
+        {(recordStatus==='paused'||recordStatus==='recording')
         &&
+        <div style={{display:'flex',alignItems:'center',flexDirection:'column'}}>
         <button
           id="stop"
-          style={{ background: '#B6B6B4', width: '5em', boxShadow: '0em 0.125em 0.25em #0000001A' }}
-          className=" f6 link center br3 ph3 pv2 mb2 dib light-blue bg-black"
+          style={{height:'5em', width:'5em' ,color:'white' ,borderRadius:50 , background: "#ff073a",borderColor:'#039073',borderWidth:'0px', boxShadow : '0em 0em 1em #888888' }}
+          // className=" f6 center br3 ph3 pv2 mb2 "
           onClick={() => {
             toggle('inactive');
             reset();
           }}
         >
-          <FaStopCircle size="30" color="black" />
+          <Stop style={{fontSize:'3.5em'}} color="black" />
         </button>
+        <p style={{color:'#ff073a',fontWeight:'bold',fontFamily:'Verdana'}}>
+        Tap to Submit
+      </p>
+      </div>
         }
 
       </div>
 
-      <div className="files pa3 row center" style={{ display: 'flex', justifyContent: 'center' }}>
-        <div style={{
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column'
+      
+        <div  style={{
+        paddingBottom:'1em',  display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'column'
         }}>
-          {files.map((f, index) => (
+          {recordings.map((f, index) => (
             <div
               style={{
                 display: 'flex', justifyContent: 'center', alignItems: 'center', flexDirection: 'row', marginTop: '1em'
               }}
               className={`file${index}`}
               key={f.toString()}>
-              <audio controls autoPlay style={{width:'250px'}} name="media"><source src={f} className="bg-red" type="audio/wav" /></audio>
-              <div style={{}} />
+              <audio controls autoPlay style={{width:'250px'}} name="media">
+                <source src={f} className="bg-red" type="audio/wav" />
+              </audio>
+              
               <button
-                className="w-2 center f6 link grow "
-                style={{ height: '2rem', width: '2rem', borderRadius: '60%' ,background: '#B6B6B4' }}
+                style={{height:'2.5em', width:'2.5em' ,color:'white' ,borderRadius:50 , background: "#039073",borderColor:'#039073',borderWidth:'0px', boxShadow : '0em 0em 0.5em #888888' }}
                 onClick={() => {
                   //   alert('removing');
                   //   delete files[index]
                   triggerDelete(f, index)
-                }}
-              >
-                <AiFillCloseCircle size="15"/>
+                }}>
+              
+                < DeleteForever style={{fontSize:'20px'}} />
 
               </button>
 
             </div>
           ))}
         </div>
-      </div>
+      
       <div style={{ display: 'flex', justifyContent: 'center' }}>
-        {files.length > 0 ? <button className="submitButton" style={{ fontSize: '1em',background: '#B6B6B4',color:'black' ,fontFamily:'bold'}} onClick={submitAudio} type="button" >Upload</button> : null}
+        {recordings.length > 0 
+        ? <button className="submitButton"   onClick={submitAudio} type="button" >
+              Upload
+          </button> 
+        : null}
       </div>
 
     </div>
@@ -205,3 +227,5 @@ const Timer = props => {
 };
 
 export default Timer;
+
+

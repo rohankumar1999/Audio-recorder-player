@@ -2,7 +2,7 @@ import React,{Component} from 'react';
 import {useState,useEffect} from 'react';
 import { ReactMic } from 'react-mic';
 import './App.css'      //css file for styling
-import 'tachyons'
+// import 'tachyons'
 
 
 const App=(props)=>{
