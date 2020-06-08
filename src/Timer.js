@@ -28,16 +28,20 @@ const Timer = props => {
 
   useEffect(() => {
     let interval = null;
-    if (timerValue === 0) {
-      setTimerValue(0)
-
-      toggle('inactive');
+    if(timerValue===-1){
       reset();
     }
-    if (recordStatus === 'recording') {
+    if (timerValue === 0) {
+      
+      toggle('inactive');
+      
+      
+    }
+    
+    if (recordStatus === 'recording'||timerValue===0) {
       interval = setInterval(() => {
         setTimerValue(timerValue => timerValue - 1);
-      }, 1050);
+      }, 1060);
     } else if (recordStatus === 'paused' && timerValue !== 5) {
       clearInterval(interval);
     }
